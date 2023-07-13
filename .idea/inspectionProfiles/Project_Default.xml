@@ -1,0 +1,29 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="N806" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="pathlib.Path.__add__" />
+          <option value="PySide6.QtWidgets.clicked.connect" />
+          <option value="PySide6.QtCore.timeout.connect" />
+          <option value="v2.GUI.windows.main_window.ui_main_window.qt_core" />
+          <option value="v2.GUI.windows.main_window.UiMainWindow" />
+          <option value="PyQt6.QtGui.triggered.connect" />
+          <option value="PyQt6.QtWidgets.valueChanged.connect" />
+          <option value="PyQt6.QtWidgets.activated.connect" />
+          <option value="PyQt5.QtWidgets.triggered.connect" />
+          <option value="PyQt5.QtWidgets.activated.connect" />
+          <option value="PyQt5.QtWidgets.valueChanged.connect" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
