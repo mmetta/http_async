@@ -139,15 +139,15 @@ class ConsultView(QWidget):
         btc_usd = None
         btc_brl = None
         wallet = float(self.config['wallet'])
+        coin = self.config['coin']
 
         for par in api.res:
             # print(item['symbol'], item['bidPrice'], item['priceChangePercent'])
             # print(item)
             # text = f"{item['symbol']}\t {float(item['bidPrice']):.4f}\t {item['priceChangePercent']}"
-
-            if par['symbol'] == 'BTCBUSD':
+            if par['symbol'] == f'{coin}BUSD':
                 btc_usd = float(par['bidPrice'])
-            if par['symbol'] == 'BTCBRL':
+            if par['symbol'] == f'{coin}BRL':
                 btc_brl = float(par['bidPrice'])
             theme = self.btn_dark.text()
             item = QListWidgetItem()
@@ -159,7 +159,7 @@ class ConsultView(QWidget):
         if wallet > 0:
             usd = btc_usd * wallet
             brl = btc_brl * wallet
-            txt = f'Wallet: US$ {round(usd, 2)} - R$ {round(brl, 2)}'
+            txt = f'Wallet {coin}: US$ {round(usd, 2)} - R$ {round(brl, 2)}'
             self.lbl_wallet.setText(txt)
 
         self.lbl_time.setText(self.data_hora())

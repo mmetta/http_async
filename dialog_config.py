@@ -2,8 +2,8 @@ from pathlib import Path
 
 from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QStandardItemModel, QStandardItem, QDoubleValidator
-from PySide6.QtWidgets import QDialog, QDialogButtonBox, QVBoxLayout, QLabel, QPushButton, QListView, QAbstractItemView, \
-    QHBoxLayout, QLineEdit, QFrame
+from PySide6.QtWidgets import QDialog, QVBoxLayout, QLabel, QPushButton, QListView, QAbstractItemView, \
+    QHBoxLayout, QLineEdit, QFrame, QComboBox
 
 from atual_path import local_path
 from binance_all import consult_all
@@ -96,18 +96,27 @@ class CustomDialog:
         line.setFrameShadow(QFrame.Sunken)
 
         h_wallet = QHBoxLayout()
-        lbl_wallet = QLabel('Carteira (BTC):')
+        lbl_wallet = QLabel('Carteira:')
         self.btn_wallet = QPushButton()
         self.btn_wallet.setDisabled(True)
         self.edt_wallet = QLineEdit()
         self.edt_wallet.setValidator(QDoubleValidator())
         self.edt_wallet.setText(self.config['wallet'])
         self.edt_wallet.textChanged.connect(lambda: self.btn_wallet.setDisabled(False))
+
+        self.cbx_wallet = QComboBox()
+        self.cbx_wallet.addItems(('ADA', 'BTC', 'BNB', 'BUSD', 'MATIC'))
+        if self.config['coin'] is not None:
+            self.cbx_wallet.setCurrentText(self.config['coin'])
+        else:
+            self.cbx_wallet.setCurrentIndex(-1)
+
         ico_wallet = cor_icon(f'{path}/icons/wallet.svg')
         self.btn_wallet.setIcon(ico_wallet)
         self.btn_wallet.clicked.connect(self.upd_wallet)
         h_wallet.addWidget(lbl_wallet)
         h_wallet.addWidget(self.edt_wallet)
+        h_wallet.addWidget(self.cbx_wallet)
         h_wallet.addWidget(self.btn_wallet)
 
         self.layout.addWidget(message)
@@ -182,9 +191,14 @@ class CustomDialog:
         self.btn_all.setDisabled(False)
 
     def upd_wallet(self):
+        if self.cbx_wallet.currentIndex() == -1:
+            self.edt_wallet.setText('0.0')
+            return
         txt = self.edt_wallet.text()
+        coin = self.cbx_wallet.currentText()
         val = txt.replace(',', '.')
         self.config['wallet'] = val
+        self.config['coin'] = coin
         self.upd_sqlite()
         self.btn_wallet.setDisabled(True)
 

@@ -16,6 +16,7 @@ def create_db():
                 theme TEXT NOT NULL,
                 color_primary TEXT NOT NULL,
                 wallet TEXT NOT NULL,
+                coin TEXT,
                 my_list TEXT NOT NULL,
                 all_list TEXT NOT NULL
             );
@@ -27,8 +28,8 @@ def create_db():
     wallet = '0.0'
     my_list = ['BTCBUSD', 'BTCBRL', 'ADABUSD', 'ADABRL', 'MATICBUSD', 'MATICBRL', 'BUSDBRL', 'USDTBRL']
     all_list = []
-    conn.execute("INSERT INTO configs (theme, color_primary, my_list, all_list, wallet) VALUES (?, ?, ?, ?, ?)",
-                 (theme, primary, str(my_list), str(all_list), wallet))
+    conn.execute("INSERT INTO configs (theme, color_primary, my_list, all_list, wallet, coin) VALUES (?, ?, ?, ?, ?, ?)",
+                 (theme, primary, str(my_list), str(all_list), wallet, None))
     conn.commit()
     conn.close()
 
@@ -62,7 +63,7 @@ def update_data(data):
     cursor = conn.cursor()
 
     cursor.execute("""
-        UPDATE configs SET theme = ?, color_primary = ?, my_list = ?, all_list = ?, wallet = ?
-    """, (data['theme'], data['color_primary'], str(data['my_list']), str(data['all_list']), data['wallet']))
+        UPDATE configs SET theme = ?, color_primary = ?, my_list = ?, all_list = ?, wallet = ?, coin = ?
+    """, (data['theme'], data['color_primary'], str(data['my_list']), str(data['all_list']), data['wallet'], data['coin']))
     conn.commit()
     conn.close()
