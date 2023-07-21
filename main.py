@@ -1,10 +1,11 @@
 import os
 import sys
 from pathlib import Path
+from time import sleep
 
 from PySide6.QtCore import QCoreApplication, QProcess
-from PySide6.QtGui import QIcon
-from PySide6.QtWidgets import QMainWindow, QApplication
+from PySide6.QtGui import QIcon, QPixmap
+from PySide6.QtWidgets import QMainWindow, QApplication, QSplashScreen
 
 import qdarktheme
 
@@ -18,11 +19,13 @@ if not db_dir:
     os.makedirs(os.path.join(os.environ['APPDATA'], 'BinanceAsync'))
     create_db()
 
+path = Path(local_path())
+
 
 class MainWin(QMainWindow):
     def __init__(self):
         super().__init__()
-        path = Path(local_path())
+
         self.config = select_all()
         self.setWindowTitle('Binance Async')
         self.setWindowIcon(QIcon(f'{path}/icons/bit_icon.png'))
@@ -56,6 +59,11 @@ class MainWin(QMainWindow):
 
 if __name__ == '__main__':
     app = QApplication([])
+    pixmap = QPixmap(f'{path}/icons/splash.png')
+    splash = QSplashScreen(pixmap)
+    splash.show()
+    sleep(6)
     window = MainWin()
     window.show()
+    splash.finish(window)
     app.exec()
